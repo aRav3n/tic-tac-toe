@@ -13,6 +13,43 @@ body > div {
     padding: 3vmin;
 }
 
+button {
+    background-color: rgba(255, 255, 255, 0.708);
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    justify-self: center;
+    padding: 10px;
+}
+
+button:active {
+    background-color: rgba(255, 255, 255, 0.185);
+}
+
+button:hover {
+    background-color: rgba(255, 255, 255, 0.935);
+}
+
+#gameboard {
+    background-color: black;
+    display: grid;
+    gap: 2px;
+    height: max(60vmin, 150px);
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    margin: 0;
+    padding: 0;
+    width: max(60vmin, 150px);
+}
+
+#gameboard > div {
+    background-color: rgba(255, 255, 255, 0.975);
+    display: grid;
+    font-size: max(15vmin, 40px);
+    font-weight: bold;
+    place-content: center;
+}
+
 h1,
 h2,
 h3 {
@@ -34,5 +71,7 @@ h3 {
 }
 
 #playing {
-    width: max(200px, 95vmin);
+    display: grid;
+    gap: 2vmin;
+    justify-content: center;
 }
