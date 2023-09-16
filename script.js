@@ -1,19 +1,14 @@
-const buttonNew = document.querySelector('#newGame');
-const buttonStart = document.querySelector('#assignPlayers');
-const notPlayingSection = document.querySelector('#notPlaying');
-const playingSection = document.querySelector('#playing');
-
 const statusChange = (() => {
-    const buttonHide = (button, objectHide, objectReveal) => {
-        button.addEventListener('click', () => {
-            objectHide.style.display = 'none';
-            objectReveal.style.display = 'block';
+    const buttonHide = (buttonID, objectHideID, objectRevealID) => {
+        document.querySelector(buttonID).addEventListener('click', () => {
+            document.querySelector(objectHideID).style.display = 'none';
+            document.querySelector(objectRevealID).style.display = 'grid';
         });
     };
 
-    const initialHide = (object) => {
+    const initialHide = (objectID) => {
         window.addEventListener('DOMContentLoaded', () => {
-            object.style.display = 'none';
+            document.querySelector(objectID).style.display = 'none';
         });
     };
 
@@ -23,6 +18,26 @@ const statusChange = (() => {
     }
 })();
 
-statusChange.initialHide(playingSection);
-statusChange.buttonHide(buttonNew, playingSection, notPlayingSection);
-statusChange.buttonHide(buttonStart, notPlayingSection, playingSection);
+const gameBoard = (() => {
+    const gameboard = document.querySelector('#gameboard');
+    const row1 = ['','',''];
+    const row2 = ['','X',''];
+    const row3 = ['','','O'];
+    const board = [row1, row2, row3];
+
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            const div = document.createElement('div');
+            div.innerHTML = board[i][j];
+            gameboard.appendChild(div);
+        };
+    };
+
+    return {
+        board,
+    };
+})();
+
+statusChange.initialHide('#playing');
+statusChange.buttonHide('#newGame', '#playing', '#notPlaying');
+statusChange.buttonHide('#assignPlayers', '#notPlaying', '#playing');
