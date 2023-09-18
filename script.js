@@ -1,5 +1,22 @@
 const game = (() => {
     let currentPlayer = 'X';
+    const gameboard = document.querySelector('#gameboard');
+    gameboard.addEventListener('click', () => {
+        let counter = 0;
+        for (i = 0; i < 3; i++) {
+            for (j = 0; j < 3; j++) {
+                if (gameBoard.board[i][j] !== 0) {
+                    counter++;
+                };
+            };
+        };
+        if (counter%2 === 1) {
+            currentPlayer = 'O';
+        } else {
+            currentPlayer = 'X';
+        };
+    });
+
     const buttonHide = (buttonID, objectHideID, objectRevealID) => {
         document.querySelector(buttonID).addEventListener('click', () => {
             document.querySelector(objectHideID).style.display = 'none';
