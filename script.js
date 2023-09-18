@@ -1,4 +1,5 @@
-const statusChange = (() => {
+const game = (() => {
+    let currentPlayer = 'X';
     const buttonHide = (buttonID, objectHideID, objectRevealID) => {
         document.querySelector(buttonID).addEventListener('click', () => {
             document.querySelector(objectHideID).style.display = 'none';
@@ -15,14 +16,15 @@ const statusChange = (() => {
     return {
         buttonHide,
         initialHide,
+        currentPlayer
     }
 })();
 
 const gameBoard = (() => {
     const gameboard = document.querySelector('#gameboard');
-    const row1 = ['','',''];
-    const row2 = ['','',''];
-    const row3 = ['','',''];
+    const row1 = [0,0,0];
+    const row2 = [0,0,0];
+    const row3 = [0,0,0];
     const board = [row1, row2, row3];
 
     for (let i = 0; i < 3; i++) {
@@ -30,7 +32,11 @@ const gameBoard = (() => {
             const div = document.createElement('div');
             let string = 'gameSquare-' + i + '-' + j;
             div.setAttribute('id', string);
-            div.innerHTML = board[i][j];
+            if (board[i][j] !== 0) {
+                div.innerHTML = board[i][j];
+            } else {
+                div.innerHTML = '';
+            };
             gameboard.appendChild(div);
         };
     };
@@ -43,20 +49,21 @@ const gameBoard = (() => {
 const Player = (symbol) => {
     const board = gameBoard.board;
     const button = document.querySelector('#assignPlayers');
-    let name;
+    let textField = document.getElementById(symbol);
+    let name = 'John Doe';
     button.addEventListener('click', () => {
-        let fieldId = "#" + symbol;
-        name = document.querySelector(fieldId).value;
+        name = textField.value;
+        textField.value = "";
     });
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
             let squareId = '#gameSquare-' + i + '-' + j;
             let square = document.querySelector(squareId);
             square.addEventListener('click', () => {
-                if (board[i][j] != "") {
+                if (board[i][j] === 0) {
                     board[i][j] = symbol;
                 } else {
-                    console.log('invalid play');
+                    console.log('invalid play, spot ' + i + ', ' + j + ' value is ' + board[i][j]);
                 };
             });
         };
@@ -68,6 +75,9 @@ const Player = (symbol) => {
     }
 };
 
-statusChange.initialHide('#playing');
-statusChange.buttonHide('#newGame', '#playing', '#notPlaying');
-statusChange.buttonHide('#assignPlayers', '#notPlaying', '#playing');
+game.initialHide('#playing');
+game.buttonHide('#newGame', '#playing', '#notPlaying');
+game.buttonHide('#assignPlayers', '#notPlaying', '#playing');
+
+const playerX = Player('X');
+const playerO = Player('O');
