@@ -54,6 +54,7 @@ const playerX = Player ('John Doe', 'X');
 
 const game = (() => {
     let currentPlayer = playerX;
+    const currentPlayerDisplay = document.querySelector('#playerName');
     const gameboard = document.querySelector('#gameboard');
     const startButton = document.querySelector('#assignPlayers');
     gameboard.addEventListener('click', () => {
@@ -67,10 +68,8 @@ const game = (() => {
         };
         if (counter%2 === 1) {
             currentPlayer = playerO;
-            updateCurrentPlayerDisplay(currentPlayer);
         } else {
             currentPlayer = playerX;
-            updateCurrentPlayerDisplay(currentPlayer);
         };
 
     });
@@ -88,17 +87,14 @@ const game = (() => {
         });
     };
 
-    function updateCurrentPlayerDisplay(player) {
-        const currentPlayerDisplay = document.querySelector('#playerName');
-        currentPlayerDisplay.innerHTML = player.name;
-    };
-
     startButton.addEventListener('click', () => {
         const playerOName = document.querySelector('#O').value;
         const playerXName = document.querySelector('#X').value;
     
         playerO.name = playerOName;
         playerX.name = playerXName;
+
+        currentPlayerDisplay.innerHTML = currentPlayer.name;
     
         return(playerO, playerX);
     });
@@ -107,7 +103,6 @@ const game = (() => {
         buttonHide,
         initialHide,
         currentPlayer,
-        updateCurrentPlayerDisplay
     }
 })();
 
