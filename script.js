@@ -1,11 +1,12 @@
 const startButton = document.querySelector('#assignPlayers');
 
 const gameBoard = (() => {
-    const gameboard = document.querySelector('#gameboard');
     const row1 = [0,0,0];
     const row2 = [0,0,0];
     const row3 = [0,0,0];
     const board = [row1, row2, row3];
+    const gameboard = document.querySelector('#gameboard');
+    const newGameButton = document.querySelector('#newGame');
 
     function checkForWinner() {
         const heading = document.querySelector('#heading');
@@ -15,10 +16,10 @@ const gameBoard = (() => {
             let counterO = 0;
             let counterX = 0;
             for (let j = 0; j < 3; j++) {
-                if (board[i][j] === 'X') {
-                    counterX++;
-                } else if (board[i][j] === 'O') {
+                if (board[i][j] === 'O') {
                     counterO++;
+                } else if (board[i][j] === 'X') {
+                    counterX++;
                 };
                 if (counterO === 3) {
                     winner = playerO;
@@ -39,10 +40,10 @@ const gameBoard = (() => {
             let counterO = 0;
             let counterX = 0;
             for (let j = 0; j < 3; j++) {
-                if (board[j][i] === 'X') {
-                    counterX++;
-                } else if (board[j][i] === 'O') {
+                if (board[j][i] === 'O') {
                     counterO++;
+                } else if (board[j][i] === 'X') {
+                    counterX++;
                 };
                 if (counterO === 3) {
                     winner = playerO;
@@ -137,6 +138,10 @@ const gameBoard = (() => {
 
     refreshGameBoard();
 
+    newGameButton.addEventListener('click', () => {
+        location.reload();
+    });
+
     return {
         board,
         refreshGameBoard,
@@ -209,6 +214,7 @@ const game = (() => {
         playerO.name = playerOName;
         playerX.name = playerXName;
 
+        document.querySelector('#playerNames').reset();
         currentPlayerDisplay.innerHTML = currentPlayer.name;
     
         return(playerO, playerX);
