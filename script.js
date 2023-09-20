@@ -123,9 +123,32 @@ const gameBoard = (() => {
                 };
             };
         };
+
+        function checkForTie() {
+            let counter = 0;
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if (board[i][j] !== 0) {
+                        counter++;
+                    };
+                };
+            };
+            if (counter === 9) {
+                heading.innerHTML = "It's a tie!";
+                for (let i = 0; i < 3; i++) {
+                    for (let j = 0; j < 3; j++) {
+                        const idString = '#gameSquare-' + i + '-' + j;
+                        const square = document.querySelector(idString);
+                        square.removeAttribute('id');
+                    };
+                };
+            };
+        };
+        
         checkHorizontals();
         checkVerticals();
         checkDiagonals();
+        checkForTie();
         
         if(winner !== 0){
             let winningString = winner.name + ' wins!';
