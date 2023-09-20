@@ -8,41 +8,112 @@ const gameBoard = (() => {
     const board = [row1, row2, row3];
 
     function checkForWinner() {
+        const heading = document.querySelector('#heading');
+        const playerAnnouncement = document.querySelector('#playerAnnouncement');
+        let winner = 0;
         for (let i = 0; i < 3; i++){
+            let counterO = 0;
             let counterX = 0;
-            let counterY = 0;
             for (let j = 0; j < 3; j++) {
                 if (board[i][j] === 'X') {
                     counterX++;
-                } else if (board[i][j] === 'Y') {
-                    counterY++;
+                } else if (board[i][j] === 'O') {
+                    counterO++;
                 };
-                if (counterX === 3 || counterY === 3) {
+                if (counterO === 3) {
+                    winner = playerO;
+                } else if (counterX === 3) {
+                    winner = playerX;
+                };
+                if (winner !== 0) {
                     for (let k = 0; k < 3; k++){
                         const string = '#gameSquare-' + i + '-' + k;
                         const square = document.querySelector(string);
                         square.classList.add('winner');
                     };
+                    return;
                 };
             };
         };
         for (let i = 0; i < 3; i++){
+            let counterO = 0;
             let counterX = 0;
-            let counterY = 0;
             for (let j = 0; j < 3; j++) {
                 if (board[j][i] === 'X') {
                     counterX++;
-                } else if (board[j][i] === 'Y') {
-                    counterY++;
+                } else if (board[j][i] === 'O') {
+                    counterO++;
                 };
-                if (counterX === 3 || counterY === 3) {
+                if (counterO === 3) {
+                    winner = playerO;
+                } else if (counterX === 3) {
+                    winner = playerX;
+                };
+                if (winner !== 0) {
                     for (let k = 0; k < 3; k++){
                         const string = '#gameSquare-' + k + '-' + i;
                         const square = document.querySelector(string);
                         square.classList.add('winner');
                     };
+                    return;
                 };
             };
+        };
+        function checkDiagonals() {
+            let counterO = 0;
+            let counterX = 0;
+            for (let i = 0; i < 3; i++) {
+                if (board[i][i] === 'O') {
+                    counterO++;
+                } else if (board[i][i] === 'X') {
+                    counterX++
+                };
+                if (counterO === 3) {
+                    winner = playerO;
+                } else if (counterX === 3) {
+                    winner = playerX;
+                };
+                if (winner !== 0) {
+                    for (let j = 0; j < 3; j++) {
+                        const string = '#gameSquare-' + j + '-' + j;
+                        const square = document.querySelector(string);
+                        square.classList.add('winner');
+                    };
+                    return;
+                };
+            };
+
+            counterO = 0;
+            counterX = 0;
+            for (let i = 0; i < 3; i++) {
+                let j = 2 - i;
+                if (board[i][j] === 'O') {
+                    counterO++;
+                } else if (board[i][j] === 'X') {
+                    counterX++
+                };
+                if (counterO === 3) {
+                    winner = playerO;
+                } else if (counterX === 3) {
+                    winner = playerX;
+                };
+                if (winner !== 0) {
+                    for (let k = 0; k < 3; k++) {
+                        let l = 2 - k;
+                        const string = '#gameSquare-' + k + '-' + l;
+                        const square = document.querySelector(string);
+                        square.classList.add('winner');
+                    };
+                    return;
+                };
+            };
+        };
+        checkDiagonals();
+        
+        if(winner !== 0){
+            let winningString = winner.name + ' wins!';
+            heading.innerHTML = winningString;
+            playerAnnouncement.innerHTML = "";
         };
     };
 
@@ -114,7 +185,6 @@ const playerO = Player ('John Doe', 'O');
 const playerX = Player ('John Doe', 'X');
 
 const game = (() => {
-    const board = document.querySelector('#gameboard');
     let currentPlayer = playerX;
     const currentPlayerDisplay = document.querySelector('#playerName');
     const startButton = document.querySelector('#assignPlayers');
