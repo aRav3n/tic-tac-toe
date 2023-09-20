@@ -34,6 +34,7 @@ const gameBoard = (() => {
 
 const Player = (name, symbol) => {
     const board = gameBoard.board;
+    const currentPlayerDisplay = document.querySelector('#playerName');
 
     function switchCurrentPlayer() {
         if (game.currentPlayer.symbol === 'X') {
@@ -41,6 +42,7 @@ const Player = (name, symbol) => {
         } else if (game.currentPlayer.symbol === 'O') {
             game.currentPlayer = playerX;
         };
+        currentPlayerDisplay.innerHTML = game.currentPlayer.name;
     };
 
     function listenForPlayerClicks() {
@@ -51,9 +53,7 @@ const Player = (name, symbol) => {
                 square.addEventListener('click', () => {
                     if (board[i][j] === 0) {
                         board[i][j] = game.currentPlayer.symbol;
-                        console.log('current player: ' + game.currentPlayer.name);
                         switchCurrentPlayer();
-                        console.log('switch! new current player: ' + game.currentPlayer.name);
                         gameBoard.refreshGameBoard();
                         listenForPlayerClicks();
                     };
@@ -74,6 +74,7 @@ const playerO = Player ('John Doe', 'O');
 const playerX = Player ('John Doe', 'X');
 
 const game = (() => {
+    const board = document.querySelector('#gameboard');
     let currentPlayer = playerX;
     const currentPlayerDisplay = document.querySelector('#playerName');
     const startButton = document.querySelector('#assignPlayers');
