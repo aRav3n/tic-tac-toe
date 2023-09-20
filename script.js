@@ -7,6 +7,45 @@ const gameBoard = (() => {
     const row3 = [0,0,0];
     const board = [row1, row2, row3];
 
+    function checkForWinner() {
+        for (let i = 0; i < 3; i++){
+            let counterX = 0;
+            let counterY = 0;
+            for (let j = 0; j < 3; j++) {
+                if (board[i][j] === 'X') {
+                    counterX++;
+                } else if (board[i][j] === 'Y') {
+                    counterY++;
+                };
+                if (counterX === 3 || counterY === 3) {
+                    for (let k = 0; k < 3; k++){
+                        const string = '#gameSquare-' + i + '-' + k;
+                        const square = document.querySelector(string);
+                        square.classList.add('winner');
+                    };
+                };
+            };
+        };
+        for (let i = 0; i < 3; i++){
+            let counterX = 0;
+            let counterY = 0;
+            for (let j = 0; j < 3; j++) {
+                if (board[j][i] === 'X') {
+                    counterX++;
+                } else if (board[j][i] === 'Y') {
+                    counterY++;
+                };
+                if (counterX === 3 || counterY === 3) {
+                    for (let k = 0; k < 3; k++){
+                        const string = '#gameSquare-' + k + '-' + i;
+                        const square = document.querySelector(string);
+                        square.classList.add('winner');
+                    };
+                };
+            };
+        };
+    };
+
     function refreshGameBoard () {
         gameboard.innerHTML = "";
         for (let i = 0; i < 3; i++) {
@@ -22,6 +61,7 @@ const gameBoard = (() => {
                 gameboard.appendChild(div);
             };
         };
+        checkForWinner();
     };
 
     refreshGameBoard();

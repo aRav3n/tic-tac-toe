@@ -75,3 +75,7 @@ h3 {
     gap: 2vmin;
     justify-content: center;
 }
+
+.winner {
+    color: rgb(4, 184, 4);
+}
